@@ -1,0 +1,117 @@
+{
+  "name": "bullmq-explorer",
+  "displayName": "BullMQ Explorer",
+  "description": "VS Code extension for managing BullMQ queues",
+  "version": "0.0.1",
+  "publisher": "tipfurion",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:bullmq-explorer.showConfig"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "bullmq-explorer",
+          "title": "BullMQ Explorer",
+          "icon": "media/dep.svg"
+        }
+      ]
+    },
+    "views": {
+      "bullmq-explorer": [
+        {
+          "id": "bullmq-explorer",
+          "name": "Queues"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "bullmq-explorer.showConfig",
+        "title": "bullmq-explorer: Show Configuration"
+      },
+      {
+        "command": "bullmq-explorer.refreshConnection",
+        "title": "Refresh Connection",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "bullmq-explorer.refreshQueue",
+        "title": "Refresh Queue",
+        "icon": "$(refresh)"
+      }
+    ],
+    "menus": {
+      "view/title": [],
+      "view/item/context": [
+        {
+          "command": "bullmq-explorer.refreshConnection",
+          "when": "view == bullmq-explorer && viewItem == connection",
+          "group": "inline"
+        },
+        {
+          "command": "bullmq-explorer.refreshQueue",
+          "when": "view == bullmq-explorer && viewItem == queue",
+          "group": "inline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "BullMQ Explorer Configuration",
+      "properties": {
+        "bullmq-explorer.connections": {
+          "type": "array",
+          "default": [
+            {
+              "name": "My firt connection",
+              "config": {
+                "host": "localhost",
+                "port": 6379,
+                "password": ""
+              }
+            }
+          ],
+          "description": "Redis connections"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "seed": "tsx scripts/seed.ts",
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint"
+  },
+  "devDependencies": {
+    "@faker-js/faker": "^10.1.0",
+    "@eslint/js": "^9.13.0",
+    "@stylistic/eslint-plugin": "^2.9.0",
+    "@types/ftp": "^0.3.33",
+    "@types/mkdirp": "^0.5.2",
+    "@types/node": "^22",
+    "@types/rimraf": "^2.0.2",
+    "@types/vscode": "^1.100.0",
+    "eslint": "^9.13.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.0"
+  },
+  "dependencies": {
+    "bullmq": "^5.0.0",
+    "ioredis": "^5.3.0",
+    "jsonc-parser": "^0.4.2",
+    "minimist": "^1.2.6",
+    "mkdirp": "^0.5.1",
+    "rimraf": "^2.6.2"
+  }
+}

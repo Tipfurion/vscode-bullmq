@@ -1,0 +1,2 @@
+export const SUCCEESS_CONNECTTION_COLOR = "#20c906";
+export const ERROR_CONNECTTION_COLOR = "#dc3545";

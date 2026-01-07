@@ -1,0 +1,41 @@
+// A launch configuration that compiles the extension and then opens it inside a new window
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Program",
+            "program": "${workspaceFolder}/simple.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
+            "name": "Launch Extension",
+            "type": "extensionHost",
+            "request": "launch",
+            "runtimeExecutable": "${execPath}",
+            "args": [
+                "--extensionDevelopmentPath=${workspaceRoot}",
+                "--enable-proposed-api=bullmq-explorer",
+                "${workspaceFolder}/test-workspace"
+            ],
+            "sourceMaps": true,
+            "outFiles": [
+                "${workspaceRoot}/dist/**/*.js"
+            ],
+            "preLaunchTask": "npm: watch"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Attach to Extension Host",
+            "port": 5870,
+            "restart": true,
+            "outFiles": [
+                "${workspaceRoot}/dist"
+            ]
+        }
+    ]
+}
