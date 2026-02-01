@@ -2,8 +2,12 @@
   "name": "bullmq-explorer",
   "displayName": "BullMQ Explorer",
   "description": "VS Code extension for managing BullMQ queues",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "publisher": "tipfurion",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tipfurion/vscode-bullmq"
+  },
   "private": true,
   "license": "MIT",
   "engines": {
@@ -12,9 +16,7 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onCommand:bullmq-explorer.showConfig"
-  ],
+  "activationEvents": [],
   "main": "./dist/extension.js",
   "contributes": {
     "viewsContainers": {
@@ -22,7 +24,7 @@
         {
           "id": "bullmq-explorer",
           "title": "BullMQ Explorer",
-          "icon": "media/dep.svg"
+          "icon": "media/icon.png"
         }
       ]
     },
@@ -40,6 +42,11 @@
         "title": "bullmq-explorer: Show Configuration"
       },
       {
+        "command": "bullmq-explorer.refresh",
+        "title": "Refresh",
+        "icon": "$(refresh)"
+      },
+      {
         "command": "bullmq-explorer.refreshConnection",
         "title": "Refresh Connection",
         "icon": "$(refresh)"
@@ -48,10 +55,72 @@
         "command": "bullmq-explorer.refreshQueue",
         "title": "Refresh Queue",
         "icon": "$(refresh)"
+      },
+      {
+        "command": "bullmq-explorer.filter",
+        "title": "Filter..."
+      },
+      {
+        "command": "bullmq-explorer.clearFilter",
+        "title": "Clear Filter"
+      },
+      {
+        "command": "bullmq-explorer.showFilterMenu",
+        "title": "Manage Filter"
+      },
+      {
+        "command": "bullmq-explorer.sort",
+        "title": "Sort..."
+      },
+      {
+        "command": "bullmq-explorer.clearSort",
+        "title": "Clear Sort"
+      },
+      {
+        "command": "bullmq-explorer.showSortMenu",
+        "title": "Manage Sort"
+      },
+      {
+        "command": "bullmq-explorer.manageConnections",
+        "title": "Manage Connections"
+      },
+      {
+        "command": "bullmq-explorer.createJob",
+        "title": "Create Job"
+      },
+      {
+        "command": "bullmq-explorer.drainQueue",
+        "title": "Drain Queue"
+      },
+      {
+        "command": "bullmq-explorer.obliterateQueue",
+        "title": "Obliterate Queue"
+      },
+      {
+        "command": "bullmq-explorer.showJob",
+        "title": "Show Job Details"
+      },
+      {
+        "command": "bullmq-explorer.editJob",
+        "title": "Edit Job"
+      },
+      {
+        "command": "bullmq-explorer.removeJob",
+        "title": "Remove Job"
+      },
+      {
+        "command": "bullmq-explorer.promoteJob",
+        "title": "Promote Job"
       }
     ],
     "menus": {
-      "view/title": [],
+      "view/title": [
+        {
+          "command": "bullmq-explorer.refresh",
+          "when": "view == bullmq-explorer",
+          "group": "navigation"
+        }
+      ],
       "view/item/context": [
         {
           "command": "bullmq-explorer.refreshConnection",
@@ -62,6 +131,81 @@
           "command": "bullmq-explorer.refreshQueue",
           "when": "view == bullmq-explorer && viewItem == queue",
           "group": "inline"
+        },
+        {
+          "command": "bullmq-explorer.createJob",
+          "when": "view == bullmq-explorer && viewItem == queue",
+          "group": "1_queue"
+        },
+        {
+          "command": "bullmq-explorer.drainQueue",
+          "when": "view == bullmq-explorer && viewItem == queue",
+          "group": "1_queue"
+        },
+        {
+          "command": "bullmq-explorer.obliterateQueue",
+          "when": "view == bullmq-explorer && viewItem == queue",
+          "group": "1_queue"
+        },
+        {
+          "command": "bullmq-explorer.showJob",
+          "when": "view == bullmq-explorer && viewItem == job",
+          "group": "1_job"
+        },
+        {
+          "command": "bullmq-explorer.showJob",
+          "when": "view == bullmq-explorer && viewItem == job.delayed",
+          "group": "1_job"
+        },
+        {
+          "command": "bullmq-explorer.editJob",
+          "when": "view == bullmq-explorer && viewItem == job",
+          "group": "1_job"
+        },
+        {
+          "command": "bullmq-explorer.editJob",
+          "when": "view == bullmq-explorer && viewItem == job.delayed",
+          "group": "1_job"
+        },
+        {
+          "command": "bullmq-explorer.promoteJob",
+          "when": "view == bullmq-explorer && viewItem == job.delayed",
+          "group": "1_job"
+        },
+        {
+          "command": "bullmq-explorer.removeJob",
+          "when": "view == bullmq-explorer && viewItem == job",
+          "group": "1_job"
+        },
+        {
+          "command": "bullmq-explorer.removeJob",
+          "when": "view == bullmq-explorer && viewItem == job.delayed",
+          "group": "1_job"
+        },
+        {
+          "command": "bullmq-explorer.showFilterMenu",
+          "when": "view == bullmq-explorer && viewItem == filter",
+          "group": "1_filter"
+        },
+        {
+          "command": "bullmq-explorer.clearFilter",
+          "when": "view == bullmq-explorer && viewItem == filter",
+          "group": "1_filter"
+        },
+        {
+          "command": "bullmq-explorer.showSortMenu",
+          "when": "view == bullmq-explorer && viewItem == sort",
+          "group": "1_sort"
+        },
+        {
+          "command": "bullmq-explorer.clearSort",
+          "when": "view == bullmq-explorer && viewItem == sort",
+          "group": "1_sort"
+        },
+        {
+          "command": "bullmq-explorer.manageConnections",
+          "when": "view == bullmq-explorer && viewItem == manageConnections",
+          "group": "1_connections"
         }
       ]
     },
@@ -93,13 +237,10 @@
     "lint": "eslint"
   },
   "devDependencies": {
-    "@faker-js/faker": "^10.1.0",
     "@eslint/js": "^9.13.0",
+    "@faker-js/faker": "^10.1.0",
     "@stylistic/eslint-plugin": "^2.9.0",
-    "@types/ftp": "^0.3.33",
-    "@types/mkdirp": "^0.5.2",
     "@types/node": "^22",
-    "@types/rimraf": "^2.0.2",
     "@types/vscode": "^1.100.0",
     "eslint": "^9.13.0",
     "tsx": "^4.21.0",
@@ -109,9 +250,6 @@
   "dependencies": {
     "bullmq": "^5.0.0",
     "ioredis": "^5.3.0",
-    "jsonc-parser": "^0.4.2",
-    "minimist": "^1.2.6",
-    "mkdirp": "^0.5.1",
-    "rimraf": "^2.6.2"
+    "jsonc-parser": "^0.4.2"
   }
 }

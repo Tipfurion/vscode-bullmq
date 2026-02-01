@@ -25,6 +25,14 @@
         "port": 6379,
         "password": ""
       }
+    },
+    {
+      "name": "connection 3",
+      "config": {
+        "host": "localhost",
+        "port": 6380,
+        "password": ""
+      }
     }
   ]
 }

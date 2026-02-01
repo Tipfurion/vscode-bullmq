@@ -1,4 +1,4 @@
-import { BullMQTreeDataProvider } from "../tree-data-provider";
+import { BullMQTreeDataProvider } from "../tree/tree-data-provider";
 import { BullRedisConnection } from "../bull-redis-connection";
 import { Queue } from "bullmq";
 

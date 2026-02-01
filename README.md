@@ -1,51 +1,88 @@
-# Views & View Containers
+# BullMQ Explorer
 
-This sample demonstrates how to implement and contribute a tree view in VS Code. This includes:
+Browse and manage [BullMQ](https://docs.bullmq.io/) queues directly from VS Code. Connect to Redis, inspect jobs, and run common queue operations without leaving the editor.
 
-- Contributing views and view containers.
-- Contributing actions in various location of the view.
-- Implementing the tree data provider for the view.
-- Creating and working with the view.
+![BullMQ Explorer](media/preview.png)
 
-This sample provides following views
+## Features
 
-- Node dependencies view
-- Ftp file explorer view
+- **Sidebar view** — Open the **BullMQ Explorer** from the Activity Bar to see all configured Redis connections and their queues.
+- **Multiple connections** — Add several Redis instances and switch between them in one place.
+- **Autodiscover queues** — The extension will automatically discover queues in the Redis instances and display them in the sidebar.
+- **Queue management**
+  - **Create Job** — Add a new job to a queue (supports JSON payload).
+  - **Drain Queue** — Move all waiting jobs to delayed (or remove them, depending on BullMQ options).
+  - **Obliterate Queue** — Remove all queue data (use with care).
+- **Job actions**
+  - **Show Job Details** — View full job data, options, and progress in the editor.
+  - **Edit Job** — Change job data or options.
+  - **Remove Job** — Delete a job from the queue.
+  - **Promote Job** — Move a delayed job back to waiting.
+- **Filter & sort** — Filter jobs by status and sort by id, timestamp, or other fields to find what you need quickly.
 
-Following example shows Node dependencies view in Package Explorer View container.
+## Configuration
 
-![Package Explorer](./resources/package-explorer.png)
+Add your Redis connections in Settings (**File > Preferences > Settings**, or `Cmd+,` / `Ctrl+,`) under **BullMQ Explorer Configuration**:
 
-## VS Code API
+- **`bullmq-explorer.connections`** — Array of connection objects. Each entry can have:
+  - `name` — Label shown in the sidebar (e.g. `"Local"`, `"Staging"`).
+  - `config` — IOredis client options.
 
-This sample uses following contribution points, activation events and APIs
+Example in `settings.json`:
 
-### Contribution Points
+```json
+{
+  "bullmq-explorer.connections": [
+    {
+      "name": "Local Redis",
+      "config": {
+        "host": "localhost",
+        "port": 6379,
+        "password": ""
+      }
+    },
+    {
+      "name": "Staging",
+      "config": {
+        "host": "redis.staging.example.com",
+        "port": 6379,
+        "password": "your-password"
+      }
+    }
+  ]
+}
+```
 
-- `views`
-- `viewsContainers`
-- `menu`
-  - `view/title`
-  - `view/item/context`
+You can also use **Manage Connections** from the BullMQ Explorer view to add or edit connections.
 
-### Activation Events
+## Usage
 
-- `onView:${viewId}`
+1. **Open the view** — Click the BullMQ Explorer icon in the Activity Bar (left side), or run the command **View: Open View…** and choose **BullMQ Explorer**.
+2. **Expand a connection** — Click a connection to load its queues.
+3. **Expand a queue** — Click a queue to see job status groups (e.g. waiting, active, completed, failed, delayed).
+4. **Use context menus** — Right-click a connection, queue, or job for refresh, create job, drain, obliterate, show details, edit, remove, or promote (for delayed jobs).
+5. **Filter & sort** — Use the Filter and Sort entries in the tree (or their context menus) to narrow and order the job list.
 
-### APIs
+## Commands
 
-- `window.createTreeView`
-- `window.registerTreeDataProvider`
-- `TreeView`
-- `TreeDataProvider`
+| Command                        | Description                             |
+| ------------------------------ | --------------------------------------- |
+| **Refresh**                    | Reload the entire BullMQ Explorer tree  |
+| **Manage Connections**         | Open or edit Redis connections          |
+| **Filter…** / **Clear Filter** | Filter jobs by status or other criteria |
+| **Sort…** / **Clear Sort**     | Change how jobs are ordered             |
+| **Create Job**                 | Add a new job to the selected queue     |
+| **Drain Queue**                | Drain the selected queue                |
+| **Obliterate Queue**           | Obliterate the selected queue           |
+| **Show Job Details**           | Open full job data in the editor        |
+| **Edit Job**                   | Edit job data or options                |
+| **Remove Job**                 | Remove the job from the queue           |
+| **Promote Job**                | Promote a delayed job to waiting        |
 
-Refer to [Usage](./USAGE.md) document for more details.
+## License
 
-## Running the Sample
+MIT
 
-- Open this example in VS Code Insiders
-- `npm install`
-- `npm run watch`
-- `F5` to start debugging
-- Node dependencies view is shown in Package explorer view container in Activity bar.
-- FTP file explorer view should be shown in Explorer
+---
+
+_Icon by [Freepik - Flaticon](https://www.flaticon.com/free-icons/skull)._
