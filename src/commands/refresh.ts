@@ -1,6 +1,5 @@
 import { BullMQTreeDataProvider } from "../tree/tree-data-provider";
 import { BullRedisConnection } from "../bull-redis-connection";
-import { Queue } from "bullmq";
 
 export function refresh(bullMQTreeDataProvider: BullMQTreeDataProvider) {
   bullMQTreeDataProvider.refresh();

@@ -12,7 +12,7 @@ function getJobUri(queueName: string, jobId: string): vscode.Uri {
   });
 }
 
-function formatJobDetails(job: Job, editable: boolean = false): string {
+function formatJobDetails(job: Job, editable = false): string {
   const jobData: any = {
     id: job.id,
     name: job.name,
@@ -67,8 +67,8 @@ class JobFileSystemProvider implements vscode.FileSystemProvider {
   >();
 
   watch(
-    uri: vscode.Uri,
-    options: { recursive: boolean; excludes: string[] }
+    _uri: vscode.Uri,
+    _options: { recursive: boolean; excludes: string[] }
   ): vscode.Disposable {
     return new vscode.Disposable(() => {});
   }
@@ -89,11 +89,11 @@ class JobFileSystemProvider implements vscode.FileSystemProvider {
     };
   }
 
-  readDirectory(uri: vscode.Uri): [string, vscode.FileType][] {
+  readDirectory(_uri: vscode.Uri): [string, vscode.FileType][] {
     return [];
   }
 
-  createDirectory(uri: vscode.Uri): void {
+  createDirectory(_uri: vscode.Uri): void {
     throw new vscode.FileSystemError("Not supported");
   }
 
@@ -118,7 +118,7 @@ class JobFileSystemProvider implements vscode.FileSystemProvider {
   async writeFile(
     uri: vscode.Uri,
     content: Uint8Array,
-    options: { create: boolean; overwrite: boolean }
+    _options: { create: boolean; overwrite: boolean }
   ): Promise<void> {
     const docInfo = this.openDocuments.get(uri.toString());
     if (!docInfo) {
@@ -198,14 +198,14 @@ class JobFileSystemProvider implements vscode.FileSystemProvider {
     }
   }
 
-  delete(uri: vscode.Uri, options: { recursive: boolean }): void {
+  delete(_uri: vscode.Uri, _options: { recursive: boolean }): void {
     throw new vscode.FileSystemError("Not supported");
   }
 
   rename(
-    oldUri: vscode.Uri,
-    newUri: vscode.Uri,
-    options: { overwrite: boolean }
+    _oldUri: vscode.Uri,
+    _newUri: vscode.Uri,
+    _options: { overwrite: boolean }
   ): void {
     throw new vscode.FileSystemError("Not supported");
   }
@@ -215,7 +215,7 @@ class JobFileSystemProvider implements vscode.FileSystemProvider {
     uri: vscode.Uri,
     job: Job | null,
     error?: string,
-    editable: boolean = false
+    editable = false
   ): void {
     const now = Date.now();
     this.openDocuments.set(uri.toString(), {
@@ -302,8 +302,8 @@ export function registerShowJobDocumentProvider(
 
 export async function showJob(
   node: JobNode,
-  preview: boolean = true,
-  editable: boolean = false
+  preview = true,
+  editable = false
 ): Promise<void> {
   try {
     if (!fileSystemProvider) {

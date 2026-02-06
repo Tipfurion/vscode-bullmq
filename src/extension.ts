@@ -49,7 +49,7 @@ export function activate(context: vscode.ExtensionContext) {
     ),
     vscode.commands.registerCommand(
       "bullmq-explorer.refreshQueue",
-      (node: QueueNode) => {
+      (_node: QueueNode) => {
         refreshQueue(bullMQTreeDataProvider);
       }
     ),
@@ -88,7 +88,7 @@ export function activate(context: vscode.ExtensionContext) {
     ),
     vscode.commands.registerCommand(
       "bullmq-explorer.showJob",
-      (node: JobNode, preview: boolean = true) => showJob(node, preview)
+      (node: JobNode, preview = true) => showJob(node, preview)
     ),
     vscode.commands.registerCommand(
       "bullmq-explorer.editJob",

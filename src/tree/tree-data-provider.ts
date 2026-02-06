@@ -163,7 +163,7 @@ export class BullMQTreeDataProvider implements vscode.TreeDataProvider<Node> {
             }
 
             return filteredJobIds.length;
-          } catch (err) {
+          } catch {
             return 0;
           }
         })
@@ -178,7 +178,7 @@ export class BullMQTreeDataProvider implements vscode.TreeDataProvider<Node> {
       }
 
       return totalCount;
-    } catch (err) {
+    } catch {
       return 0;
     }
   }
@@ -261,12 +261,12 @@ export class BullMQTreeDataProvider implements vscode.TreeDataProvider<Node> {
           if (matchingIds.length > 0) {
             return true;
           }
-        } catch (err) {
+        } catch {
           continue;
         }
       }
       return false;
-    } catch (err) {
+    } catch {
       return false;
     }
   }
@@ -297,16 +297,16 @@ export class BullMQTreeDataProvider implements vscode.TreeDataProvider<Node> {
 
           const jobCount = filteredJobIds.length;
           return { status, jobCount, hasJobs: jobCount > 0 };
-        } catch (err) {
+        } catch {
           return { status, jobCount: 0, hasJobs: false };
         }
       })
     );
 
-    const statusesWithJobs: Array<{
+    const statusesWithJobs: {
       status: JobState;
       jobCount: number;
-    }> = [];
+    }[] = [];
 
     for (const result of statusChecks) {
       if (result.status === "fulfilled" && result.value.hasJobs) {

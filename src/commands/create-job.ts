@@ -98,8 +98,8 @@ class CreateJobFileSystemProvider implements vscode.FileSystemProvider {
   }
 
   watch(
-    uri: vscode.Uri,
-    options: { recursive: boolean; excludes: string[] }
+    _uri: vscode.Uri,
+    _options: { recursive: boolean; excludes: string[] }
   ): vscode.Disposable {
     return new vscode.Disposable(() => {});
   }
@@ -115,11 +115,11 @@ class CreateJobFileSystemProvider implements vscode.FileSystemProvider {
     };
   }
 
-  readDirectory(uri: vscode.Uri): [string, vscode.FileType][] {
+  readDirectory(_uri: vscode.Uri): [string, vscode.FileType][] {
     return [];
   }
 
-  createDirectory(uri: vscode.Uri): void {
+  createDirectory(_uri: vscode.Uri): void {
     throw new vscode.FileSystemError("Not supported");
   }
 
@@ -132,7 +132,7 @@ class CreateJobFileSystemProvider implements vscode.FileSystemProvider {
   async writeFile(
     uri: vscode.Uri,
     content: Uint8Array,
-    options: { create: boolean; overwrite: boolean }
+    _options: { create: boolean; overwrite: boolean }
   ): Promise<void> {
     const queueName = uri.path.replace("/", "").replace("-job.jsonc", "");
     const text = Buffer.from(content).toString("utf8");
@@ -202,14 +202,14 @@ class CreateJobFileSystemProvider implements vscode.FileSystemProvider {
     }
   }
 
-  delete(uri: vscode.Uri, options: { recursive: boolean }): void {
+  delete(_uri: vscode.Uri, _options: { recursive: boolean }): void {
     throw new vscode.FileSystemError("Not supported");
   }
 
   rename(
-    oldUri: vscode.Uri,
-    newUri: vscode.Uri,
-    options: { overwrite: boolean }
+    _oldUri: vscode.Uri,
+    _newUri: vscode.Uri,
+    _options: { overwrite: boolean }
   ): void {
     throw new vscode.FileSystemError("Not supported");
   }

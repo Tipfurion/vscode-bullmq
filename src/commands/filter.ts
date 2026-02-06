@@ -30,7 +30,7 @@ async function selectConnection(
 
   const ALL_CONNECTIONS_OPTION = "___ALL_CONNECTIONS___";
 
-  const connectionItems: Array<vscode.QuickPickItem & { id?: string }> = [
+  const connectionItems: (vscode.QuickPickItem & { id?: string })[] = [
     {
       label: "$(globe) All connections",
       detail: "Filter all connections",
@@ -88,7 +88,7 @@ async function selectQueue(
     BullRedisConnectionsProvider["getConnections"]
   >
 ): Promise<QueueSelectionResult | undefined> {
-  const allQueues: Array<{ label: string; queueName: string }> = [];
+  const allQueues: { label: string; queueName: string }[] = [];
 
   for (const connection of connectionsToFilter) {
     const queues = Array.from(connection.queues.values());
@@ -103,7 +103,7 @@ async function selectQueue(
   const ALL_QUEUES_OPTION = "___ALL_QUEUES___";
   const FILTER_OPTION = "___FILTER___";
 
-  const queueItems: Array<vscode.QuickPickItem & { id: string }> = [
+  const queueItems: (vscode.QuickPickItem & { id: string })[] = [
     {
       label: "$(globe) All queues",
       detail: "Filter all queues",

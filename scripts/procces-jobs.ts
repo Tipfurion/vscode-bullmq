@@ -86,7 +86,9 @@ async function createJob(
   queues: Record<string, Queue>,
   queueNames: string[]
 ): Promise<void> {
-  if (queueNames.length === 0) return;
+  if (queueNames.length === 0) {
+    return;
+  }
 
   const queueName = faker.helpers.arrayElement(queueNames);
   const queue = queues[queueName];

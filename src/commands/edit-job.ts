@@ -1,4 +1,3 @@
-import * as vscode from "vscode";
 import { JobNode } from "../tree/nodes/job-node";
 import { showJob } from "./show-job";
 
