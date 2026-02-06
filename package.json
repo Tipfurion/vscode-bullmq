@@ -4,6 +4,7 @@
   "description": "VS Code extension for managing BullMQ queues",
   "version": "1.0.0",
   "publisher": "tipfurion",
+  "icon": "media/icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/tipfurion/vscode-bullmq"
